@@ -1,0 +1,34 @@
+<div class="dashboard-container">
+  <div class="header">
+    <div class="live-badge">
+      <div class="pulsating-circle"></div>
+      LIVE STREAMING METRICS
+    </div>
+    <h1>Global Top Trending</h1>
+    <p>Real-time analytics powered by Redis & Cassandra</p>
+  </div>
+
+  <div class="glass-panel">
+    <div *ngIf="trendingList.length === 0" class="empty-state">
+      <p>Waiting for data stream... 🎧</p>
+    </div>
+    
+    <div *ngFor="let item of trendingList; let i = index" class="list-item">
+      <div class="rank" [ngClass]="'rank-' + (i + 1)">#{{ i + 1 }}</div>
+      
+      <div class="song-info">
+        <h3 class="song-name">{{ item.value }}</h3>
+        <div class="progress-track">
+          <!-- Width thay đổi theo tỷ lệ điểm so với Top 1 -->
+          <div class="progress-fill" [style.width]="getBarWidth(item.score)"></div>
+        </div>
+      </div>
+      
+      <div class="stats">
+        <!-- Pipe number để định dạng dấu phẩy hàng nghìn -->
+        <div class="views-count">{{ item.score | number }}</div>
+        <div class="views-label">Lượt nghe</div>
+      </div>
+    </div>
+  </div>
+</div>
